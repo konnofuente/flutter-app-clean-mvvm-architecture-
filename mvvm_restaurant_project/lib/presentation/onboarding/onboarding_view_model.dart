@@ -5,21 +5,30 @@ import 'package:mvvm_restaurant_project/presentation/base/baseviewmodel.dart';
 import 'package:mvvm_restaurant_project/presentation/onboarding/onboarding.dart';
 
 import '../../domain/models/slider_object.dart';
+import '../resources/export_app_manager.dart';
 
 class OnBoardingViewModel extends BaseViewModel
     with OnBoardingViewModelInput, OnBoardingViewModelOutput {
   //stream controller
   final StreamController _streamController =
       StreamController<SliderViewObject>();
+  late final List<SliderObject> _list;
+  int _currentIndex = 0;
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    //
+    _streamController.close();
   }
 
   @override
   void start() {
-    // TODO: implement start
+    //
+    _list = _getSliderData();
+
+    // send this slider data to our view
+
+    _postDataToView();
   }
 
   @override
@@ -30,6 +39,30 @@ class OnBoardingViewModel extends BaseViewModel
   @override
   void goPrevious() {
     // TODO: implement goPrevious
+  }
+
+  @override
+  // input
+  Sink get inputSliderViewObject => _streamController.sink;
+
+  @override
+  // TODO: Output
+  Stream<SliderViewObject> get outputSliderViewObject =>
+      _streamController.stream.map((sliderViewObject) => sliderViewObject);
+
+  List<SliderObject> _getSliderData() => [
+        SliderObject(AppStrings.onBoardingSubTitle1,
+            AppStrings.onBoardingSubTitle1, ImageAssets.onboardingLogo1),
+        SliderObject(AppStrings.onBoardingSubTitle2,
+            AppStrings.onBoardingSubTitle2, ImageAssets.onboardingLogo2),
+        SliderObject(AppStrings.onBoardingSubTitle3,
+            AppStrings.onBoardingSubTitle3, ImageAssets.onboardingLogo3),
+        SliderObject(AppStrings.onBoardingSubTitle4,
+            AppStrings.onBoardingSubTitle4, ImageAssets.onboardingLogo4)
+      ];
+
+  _postDataToView(){
+    inputSliderViewObject.add(SliderViewObject(sliderObject: _list[_currentIndex], numOfSlides: _list.length, currentIndex: _currentIndex))
   }
 }
 
@@ -48,10 +81,7 @@ abstract class OnBoardingViewModelInput {
 
 //output means data or reslt that will be sent from out view model to our view
 abstract class OnBoardingViewModelOutput {
-
-
   Stream<SliderViewObject> get outputSliderViewObject;
-  
 }
 
 class SliderViewObject {
