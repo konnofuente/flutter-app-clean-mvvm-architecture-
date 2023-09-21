@@ -9,9 +9,13 @@ import '../resources/export_app_manager.dart';
 
 class OnBoardingViewModel extends BaseViewModel
     with OnBoardingViewModelInput, OnBoardingViewModelOutput {
-  //stream controller
+  // stream controller
   final StreamController _streamController =
       StreamController<SliderViewObject>();
+
+  // final StreamController _streamController = StreamController<SliderViewObject>.broadcast();
+  
+
   late final List<SliderObject> _list;
   int _currentIndex = 0;
 
@@ -32,13 +36,32 @@ class OnBoardingViewModel extends BaseViewModel
   }
 
   @override
-  void goNext() {
-    // TODO: implement goNext
+  int goNext() {
+    int nextIndex = _currentIndex++;
+    // this will create an infinty loop that is when the next is 0 it move to the first index of the screen list
+    nextIndex >= _list.length ? _currentIndex = 0 : null;
+
+    _postDataToView();
+    return _currentIndex;
   }
 
   @override
-  void goPrevious() {
-    // TODO: implement goPrevious
+  int goPrevious() {
+    //
+
+    int previousIndex = _currentIndex--;
+    // this will create an infinty loop that is when the previous is -1 it move to the last index of the screen list
+    previousIndex == -1 ? _currentIndex = _list.length - 1 : null;
+
+    _postDataToView();
+
+    return _currentIndex;
+  }
+
+  @override
+  void onPageChanged(int index) {
+    _currentIndex = index;
+    _postDataToView();
   }
 
   @override
@@ -50,6 +73,7 @@ class OnBoardingViewModel extends BaseViewModel
   Stream<SliderViewObject> get outputSliderViewObject =>
       _streamController.stream.map((sliderViewObject) => sliderViewObject);
 
+  //private function
   List<SliderObject> _getSliderData() => [
         SliderObject(AppStrings.onBoardingSubTitle1,
             AppStrings.onBoardingSubTitle1, ImageAssets.onboardingLogo1),
@@ -61,8 +85,11 @@ class OnBoardingViewModel extends BaseViewModel
             AppStrings.onBoardingSubTitle4, ImageAssets.onboardingLogo4)
       ];
 
-  _postDataToView(){
-    inputSliderViewObject.add(SliderViewObject(sliderObject: _list[_currentIndex], numOfSlides: _list.length, currentIndex: _currentIndex))
+  _postDataToView() {
+    inputSliderViewObject.add(SliderViewObject(
+        sliderObject: _list[_currentIndex],
+        numOfSlides: _list.length,
+        currentIndex: _currentIndex));
   }
 }
 
