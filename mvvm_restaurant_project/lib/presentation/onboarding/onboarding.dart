@@ -7,6 +7,7 @@ import 'package:mvvm_restaurant_project/presentation/resources/route_manager.dar
 import 'package:mvvm_restaurant_project/presentation/resources/value_manager.dart';
 import 'package:mvvm_restaurant_project/test.dart';
 
+import '../../domain/models/slider_object.dart';
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
 
@@ -195,10 +196,3 @@ class OnBoardingPage extends StatelessWidget {
   }
 }
 
-class SliderObject {
-  String title;
-  String subTitle;
-  String image;
-
-  SliderObject(this.title, this.subTitle, this.image);
-}
