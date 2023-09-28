@@ -11,9 +11,12 @@ extension NonNullString on String {
 
 extension NonNullInteger on int {
   int orZero() {
-    if (this == Null) {
+    if (this == null) {
       return 0;
     }
     return this;
   }
 }
+
+
+
