@@ -1,7 +1,6 @@
 
 
 import 'package:mvvm_restaurant_project/app/extension.dart';
-
 import '../../domain/models/Authentication.dart';
 import '../../domain/models/contact.dart';
 import '../../domain/models/customer.dart';
@@ -9,6 +8,8 @@ import '../../presentation/resources/export_app_manager.dart';
 import '../responses/responses.dart';
 
 
+
+//the role of the mapper is to nullable responses value into a good model 
 
 extension CustomerResponseMapper on CustomerResponse? {
   Customer toDomain() {
