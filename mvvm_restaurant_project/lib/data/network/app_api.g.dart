@@ -17,7 +17,7 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   final Dio _dio;
- 
+
   String? baseUrl;
 
   @override
