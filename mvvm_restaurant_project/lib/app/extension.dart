@@ -2,6 +2,7 @@
 
 extension NonNullString on String {
   String orEmpty() {
+    // ignore: unnecessary_null_comparison
     if (this == null) {
       return " ";
     }

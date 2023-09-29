@@ -46,7 +46,13 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(child: Text('Login screen')),
+      child: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: _getContentWidget()),
+        ],
+      ),
     );
   }
 
@@ -60,7 +66,8 @@ class _LoginViewState extends State<LoginView> {
         key: _formKey,
         child: Column(
           children: [
-            SvgPicture.asset(ImageAssets.loginIc),
+            // SvgPicture.asset(ImageAssets.loginIc),
+            Image.asset(ImageAssets.splashLogo),
             SizedBox(
               height: AppSize.s28,
             ),
@@ -102,7 +109,7 @@ class _LoginViewState extends State<LoginView> {
                 stream: _viewModel.outputsIsAllInputsValid,
                 builder: (context, snapshot) {
                   return ElevatedButton(
-                      onPressed: (snapshot.data ?? false)
+                      onPressed: (snapshot.data ?? true)
                           ? null
                           : () {
                               _viewModel.login(); 
